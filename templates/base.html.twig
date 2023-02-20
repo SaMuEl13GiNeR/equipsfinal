@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon" href="{{ asset('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>') }}">
+    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+    <link href="{{ asset('assets/img/favicon.png') }}" rel="icon">
+    <link href="{{ asset('assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="{{ asset('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet') }}">
+
+    <!-- Vendor CSS Files -->
+    <link href="{{ asset('assets/vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    {% endblock %}
+</head>
+<body>
+<header id="header" class="fixed-top" style="background-color:black">
+    <div class="container d-flex align-items-center justify-content-lg-between">
+
+        <h1 class="logo me-auto me-lg-0"><a href="">
+
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    {{ app.user.username }}
+                    {% else  %}
+                        <a href ="{{ path('login') }}">LOGIN</a>
+                {% endif %}<span>.</span></a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+        <nav id="navbar" class="navbar order-last order-lg-0">
+            <ul>
+                <li><a class="nav-link scrollto active" href="{{ path('inici') }}">Inici</a></li>
+                <li><a class="nav-link scrollto" href="
+                        {{ path('equips') }}
+                        ">Equips</a></li>
+
+                {% if is_granted('ROLE_ADMIN') %}
+                <li><a href="{{ path('admin') }}">EasyAdmin</a></li>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                <li class="dropdown"><a href=""><span>Dades</span> <i class="bi bi-chevron-down"></i></a>
+                    <ul>
+                        <li><a href="{{ path('usuari') }}">Usuari</a></li>
+                        <li class="dropdown"><a href=""><span>Inserir</span> <i class="bi bi-chevron-right"></i></a>
+                            <ul>
+                                <li><a href="{{ path('nouEquip') }}">Equip</a></li>
+                                <li><a href="{{ path('inserirmultiple') }}">Multiples Equips</a></li>
+                                <li><a href="{{ path('nouMembre') }}">Membre</a></li>
+                                <li><a href="{{ path('usuariNou') }}">Usuari</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li> {% endif %}
+
+                <li><a class="nav-link scrollto" href="">Contact</a></li>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <li> <a href ="{{ path('logout') }}">Logout</a></li>
+                {% endif %}
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
+
+        <a href="" class="get-started-btn scrollto">Get Started</a>
+
+    </div>
+</header>
+<br><br><br>
+{#{% if is_granted('IS_AUTHENTICATED_FULLY') %}#}
+{#    {{ data }}#}
+{#{% endif %}#}
+
+    <div style="text-align:center">
+
+
+        {% block body %}{% endblock %}
+    </div>
+</body>
+    {%  block footer %}
+        <footer id="footer">
+            <div class="footer-top">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-3 col-md-6">
+                            <div class="footer-info">
+                                <h3>Projecte 2n DAW<span>.</span></h3>
+                                <p>
+                                    Projecte Symfony gestió d'equips i membres del projecte final de 2n de DAW.
+                                </p>
+                                <div class="social-links mt-3">
+                                    <a href="https://twitter.com/SaMuEl13GiNeR" class="twitter"><i class="bx bxl-twitter"></i></a>
+                                    <a href="https://www.facebook.com/profile.php?id=100009934752857" class="facebook"><i class="bx bxl-facebook"></i></a>
+                                    <a href="https://www.instagram.com/samuel13giner/" class="instagram"><i class="bx bxl-instagram"></i></a>
+                                    <a href="https://www.reddit.com/user/SaMuEl13GiNeR" class="google-plus"><i class="bx bxl-skype"></i></a>
+                                    <a href="https://github.com/SaMuEl13GiNeR" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-6 footer-links">
+                            <h4>Enllaços</h4>
+                            <ul>
+                                <li><i class="bx bx-chevron-right"></i> <a href="{{ path('inici') }}">Inici</a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a href=" {{ path('equips') }}">Equips</a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a href="#">Contacte</a></li>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li><i class="bx bx-chevron-right"></i> <a href="{{ path('admin') }}">Administració</a></li>
+                                {% endif %}
+
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 footer-links">
+                            <h4>Serveis</h4>
+                            <ul>
+                                <li><i class="bx bx-chevron-right"></i> <a href="#">Disseny Web</a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a href="#">Desenvolupament web</a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a href="#">Gestió d'equips</a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a href="#">Gestió de Membres</a></li>
+                                <li><i class="bx bx-chevron-right"></i> <a href="#">Disseny Gràfic</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 footer-newsletter">
+                            <h4>Contacta'ns</h4>
+                            <p>Avinguda Corts Valencianes
+                            Xàtiva, Valencia, 46800</p>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </footer>
+    {% endblock %}
+
+
+
+</html>

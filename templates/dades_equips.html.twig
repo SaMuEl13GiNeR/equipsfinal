@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+ {% block stylesheets %}
+     {{ encore_entry_link_tags('app') }}
+     <link href="{{ asset('assets/css/estilsEquip.css') }}" rel="stylesheet">
+ {% endblock %}
+
+
+{% block body %}
+
+    <body>
+
+    {% if equip %}
+        <h1 id="titolEquip">Dades Equip {{ equip.id }}</h1>
+
+        <p class="paragrafEquip">Proyecte 2n DAW.<br>
+            <img src="{{  asset('assets/img/'~equip.imatge) }}" class="imatgeEquip" />
+        </p>
+        <div class="paragrafEquip">
+                <p class="tablaEquip"><strong>Codi:</strong>{{ equip.id }}</p>
+                <p class="tablaEquip"><strong>Nom:</strong>{{ equip.nom }}</p>
+                <p class="tablaEquip"><strong>Cicle:</strong>{{ equip.cicle.valor }}</p>
+                <p class="tablaEquip"><strong>Curs:</strong>{{ equip.curs.valor }}</p>
+                <p class="tablaEquip"><strong>Nota:</strong>{{ equip.nota }}</p>
+
+                <div><strong>Membres:</strong><br>
+                    {% set comptador = 0 %}
+                        {% for membre in membres %}
+                            {% if membre.equip.id == equip.id %}
+                                {% set comptador = comptador + 1 %}
+                                <div>
+                                    <p>
+                                        <strong>Nom:</strong>{{ membre.nom }}<br>
+                                        <strong>Cognoms:</strong>{{ membre.cognoms }}<br>
+                                        <strong>Email:</strong>{{ membre.email }}<br>
+                                        <strong>data Naixement:</strong>{{ membre.dataNaixement | date('Y-m-d') }}<br>
+                                        <strong>Nota:</strong>{{ membre.nota }}<br>
+                                    </p>
+                                <a href="{{ path('editarMembre', {'codi': membre.id}) }}">Editar:<img style="width: 30px; heigth: 30px;" src="{{ asset('assets/img/'~membre.imatgePerfil) }}" /></a>
+                                </div>
+                        {% endif %}
+                        {% endfor %}
+                    {% if comptador == 0 %}
+                        <p>Encara no hi ha membres</p>
+                    {% endif %}
+
+
+{#                {% for membre in equip.membres %}#}
+{#                    <p class="paragrafEquip">{{ membre }}</p>#}
+{#                {% endfor %}#}
+                </div>
+
+        </div>
+
+    {% else %}
+        <h1 id="titolEquip">Dades Equip BOBO</h1>
+        <p class="paragrafEquip">Proyecte 2n DAW.<br>
+            <img src="{{ asset('assets/img/catWonderWoman.jpg') }}" class="imatgeEquip" />
+        </p>
+        <div class="paragrafEquip">
+            <h1 id="titolEquip">Equip no trobat</h1>
+        </div>
+
+    {% endif %}
+        {{ form(formulari) }}
+    {% if formulari %}
+
+    {% endif %}
+    <div class="paragrafEquip">
+        <a href="{{ path('inici') }}">
+            <img src="{{ asset('assets/img/catWonderWoman.jpg') }}" class="imatgeEquip2" />
+            Tornar a l'inici
+        </a>
+        <a href="{{  path('editarEquip', {'codi': equip.id}) }}"><img style="width: 20px; heigth: 20px;" src="{{ asset('assets/img/catWonderWoman.jpg') }}" />Editar</a>
+    </div>
+
+
+
+    </body>
+
+
+
+{% endblock %}
